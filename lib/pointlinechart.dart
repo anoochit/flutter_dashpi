@@ -1,0 +1,57 @@
+import 'dart:math';
+
+/// Line chart example
+import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:flutter/material.dart';
+
+class PointsLineChart extends StatelessWidget {
+  final List<charts.Series> seriesList;
+  final bool animate;
+
+  PointsLineChart(this.seriesList, {this.animate});
+
+  /// Creates a [LineChart] with sample data and no transition.
+  factory PointsLineChart.withSampleData() {
+    return new PointsLineChart(
+      _createSampleData(),
+      // Disable animations for image tests.
+      animate: false,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new charts.LineChart(seriesList,
+        animate: animate,
+        defaultRenderer: new charts.LineRendererConfig(includePoints: true));
+  }
+
+  /// Create one series with sample hard coded data.
+  static List<charts.Series<LinearSales, int>> _createSampleData() {
+    List<LinearSales> data = [];
+
+    for (int i = 0; i < 30; i++) {
+      var _num = Random().nextInt(100);
+      if (_num == 0) Random().nextInt(100);
+      var _tmp = new LinearSales((i + 1), _num);
+      data.add(_tmp);
+    }
+    return [
+      new charts.Series<LinearSales, int>(
+        id: 'Sales',
+        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        domainFn: (LinearSales sales, _) => sales.year,
+        measureFn: (LinearSales sales, _) => sales.sales,
+        data: data,
+      )
+    ];
+  }
+}
+
+/// Sample linear data type.
+class LinearSales {
+  final int year;
+  final int sales;
+
+  LinearSales(this.year, this.sales);
+}
