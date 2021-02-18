@@ -1,3 +1,3 @@
 # Flutter Dashboard for Raspberry Pi
 
-A new dashboad app for Raspberry Pi 4
+A new dashboard app for Raspberry Pi 4
